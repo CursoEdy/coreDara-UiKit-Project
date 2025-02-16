@@ -12,13 +12,13 @@
         <!--Lista de Treino-->
         <scene sceneID="aRq-MS-B54">
             <objects>
-                <tableViewController id="NR8-eq-JZe" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="GymTableViewController" id="NR8-eq-JZe" customClass="GymTableViewController" customModule="CoreDataProject" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="caX-dM-Bu9">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" rowHeight="90" id="oQO-c6-D1g">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" rowHeight="90" id="oQO-c6-D1g" customClass="GymTableViewCell" customModule="CoreDataProject" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="393" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oQO-c6-D1g" id="hyP-JD-oii">
@@ -48,6 +48,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="lbCategoria" destination="nFn-V5-jwM" id="deN-1R-ehI"/>
+                                    <outlet property="lbTreino" destination="JVz-cd-JPA" id="0MX-BP-2yb"/>
                                     <segue destination="VZB-mL-g4A" kind="show" id="1kO-KP-0xG"/>
                                 </connections>
                             </tableViewCell>
@@ -57,7 +59,13 @@
                             <outlet property="delegate" destination="NR8-eq-JZe" id="fze-Ta-Clx"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Lista de Treino" id="MUe-VX-M45"/>
+                    <navigationItem key="navigationItem" title="Lista de Treino" id="MUe-VX-M45">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="pd9-4q-g70">
+                            <connections>
+                                <segue destination="jIh-5s-9dE" kind="show" id="bsx-UT-JkT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QPq-YR-Eyf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -66,7 +74,7 @@
         <!--Lista de categorias-->
         <scene sceneID="e5F-IO-uOG">
             <objects>
-                <tableViewController id="gzH-1C-jEu" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="CategoryTableViewController" id="gzH-1C-jEu" customClass="CategoryTableViewController" customModule="CoreDataProject" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="5BM-rL-Oz3">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -95,7 +103,13 @@
                             <outlet property="delegate" destination="gzH-1C-jEu" id="RI6-bL-WnH"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Lista de categorias" id="RNr-Hx-ffE"/>
+                    <navigationItem key="navigationItem" title="Lista de categorias" id="RNr-Hx-ffE">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="7I9-NV-cUz">
+                            <connections>
+                                <action selector="add:" destination="gzH-1C-jEu" id="S71-OU-pRc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Is-aB-BcJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -137,10 +151,10 @@
             </objects>
             <point key="canvasLocation" x="440" y="15"/>
         </scene>
-        <!--View Controller-->
+        <!--Gym View Controller-->
         <scene sceneID="JbZ-8S-9J8">
             <objects>
-                <viewController id="VZB-mL-g4A" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GymViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VZB-mL-g4A" customClass="GymViewController" customModule="CoreDataProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QhH-E9-eZW">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -176,6 +190,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="lbCategoria" destination="FRs-q1-0bG" id="X4N-XR-zT2"/>
+                        <outlet property="lbTreino" destination="d1U-4B-To8" id="yS0-rE-ba6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BAd-7L-mTq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -184,7 +202,7 @@
         <!--Adicionar novo treino-->
         <scene sceneID="EmE-Ts-RDR">
             <objects>
-                <viewController id="jIh-5s-9dE" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddEditViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jIh-5s-9dE" customClass="AddEditViewController" customModule="CoreDataProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KoQ-oX-arf">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -212,6 +230,9 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Salvar"/>
+                                <connections>
+                                    <action selector="addEdit:" destination="jIh-5s-9dE" eventType="touchUpInside" id="bfk-oW-QzU"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Oh5-7p-BW7"/>
@@ -228,7 +249,12 @@
                             <constraint firstItem="kW1-kc-OBb" firstAttribute="leading" secondItem="Oh5-7p-BW7" secondAttribute="leading" constant="20" id="woB-qd-Fmz"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Adicionar novo treino" id="kUe-ay-KZu"/>
+                    <navigationItem key="navigationItem" title="Adicionar novo treino" largeTitleDisplayMode="never" id="kUe-ay-KZu"/>
+                    <connections>
+                        <outlet property="btnAddEdit" destination="2kv-ba-mVr" id="n2l-pY-Mba"/>
+                        <outlet property="tfCategoria" destination="WcF-Ts-Lxt" id="tyv-be-Opm"/>
+                        <outlet property="tfTreino" destination="kW1-kc-OBb" id="Hmk-Zg-uo8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Dt-Xv-czd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -255,14 +281,17 @@
             <point key="canvasLocation" x="1572" y="-739"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Mss-HK-MHe"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="figure.strengthtraining.traditional.circle.fill" catalog="system" width="128" height="123"/>
         <image name="text.line.magnify" catalog="system" width="128" height="110"/>
         <namedColor name="main">
-            <color red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.58823529411764708" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="second">
-            <color red="0.90196078431372551" green="0.69019607843137254" blue="0.47843137254901963" alpha="0.68000000000000005" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.90196078431372551" green="0.69019607843137254" blue="0.47843137254901963" alpha="0.68000000715255737" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
