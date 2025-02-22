@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23507" systemVersion="24D60" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Category" representedClassName="Category" syncable="YES" codeGenerationType="class">
-        <attribute name="nome" optional="YES" attributeType="String"/>
-        <relationship name="gym" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Gym" inverseName="category" inverseEntity="Gym"/>
+    <entity name="Categoria" representedClassName="Categoria" syncable="YES" codeGenerationType="class">
+        <attribute name="categoria" optional="YES" attributeType="String"/>
+        <relationship name="gym" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Treino" inverseName="category" inverseEntity="Treino"/>
     </entity>
-    <entity name="Gym" representedClassName="Gym" syncable="YES" codeGenerationType="class">
-        <attribute name="nome" optional="YES" attributeType="String"/>
-        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="gym" inverseEntity="Category"/>
+    <entity name="Treino" representedClassName="Treino" syncable="YES" codeGenerationType="class">
+        <attribute name="treino" optional="YES" attributeType="String"/>
+        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Categoria" inverseName="gym" inverseEntity="Categoria"/>
     </entity>
 </model>

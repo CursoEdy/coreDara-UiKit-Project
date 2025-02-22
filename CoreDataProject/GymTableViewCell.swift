@@ -22,5 +22,10 @@ class GymTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    func prepare(with treino: Treino){
+        lbTreino.text = treino.treino ?? ""
+        lbCategoria.text = treino.category?.categoria ?? ""
+    }
 
 }

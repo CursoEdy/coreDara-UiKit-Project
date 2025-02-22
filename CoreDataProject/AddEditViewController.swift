@@ -13,13 +13,26 @@ class AddEditViewController: UIViewController {
     @IBOutlet weak var tfCategoria: UITextField!
     @IBOutlet weak var btnAddEdit: UIButton!
     
+    var treino: Treino!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
     
     @IBAction func addEdit(_ sender: UIButton) {
+        if treino == nil {
+            treino = Treino(context: context)
+        }
+        treino.treino = tfTreino.text ?? ""
+        
+        do {
+           try context.save()
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        navigationController?.popViewController(animated: true)
     }
     
 

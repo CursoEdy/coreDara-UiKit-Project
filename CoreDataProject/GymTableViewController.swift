@@ -6,35 +6,66 @@
 //
 
 import UIKit
+import CoreData
 
 class GymTableViewController: UITableViewController {
+    
+    var fetchedResultsController: NSFetchedResultsController<Treino>!
+    
+    // deixar um msg padrao caso a lista de treino esteja vazia
+    var label = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        label.text = "Vc nao possui nenhum treino no momento."
+        label.textAlignment = .center
+        
+        loadTreino()
+    }
+    
+    func loadTreino() {
+        let fetchRequest: NSFetchRequest<Treino> = Treino.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "treino", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
+//    override func numberOfSections(in tableView: UITableView) -> Int {
+//        // #warning Incomplete implementation, return the number of sections
+//        return 1
+//    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        let count = fetchedResultsController.fetchedObjects?.count ?? 0
+        
+        tableView.backgroundView = count == 0 ? label : nil
+        
+        return count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! GymTableViewCell
 
         // Configure the cell...
-
+        guard let treino = fetchedResultsController.fetchedObjects?[indexPath.row] else {
+            return cell
+        }
+        
+        cell.prepare(with: treino)
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
@@ -81,4 +112,15 @@ class GymTableViewController: UITableViewController {
     }
     */
 
+}
+
+extension GymTableViewController: NSFetchedResultsControllerDelegate {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any,at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .delete:
+            break
+        default:
+            tableView.reloadData()
+        }
+    }
 }
