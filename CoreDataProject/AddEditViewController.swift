@@ -15,9 +15,50 @@ class AddEditViewController: UIViewController {
     
     var treino: Treino!
     
+    //criando picker das categorias
+    lazy var pickerView: UIPickerView = {
+        let picker = UIPickerView()
+        picker.delegate = self
+        picker.dataSource = self
+        picker.backgroundColor = .white
+        return picker
+    }()
+    
+    var categoriaManager = CategoryManager.shared
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        categoriaManager.loadCategoria(with: context)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        //criando toolbar da pickerView, e adicionar os botoes de cancelar e retornar
+        //criando e definindo frame
+        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 44))
+        toolBar.tintColor = UIColor(named: "main")
+        
+        //criando botoes
+        let btnCancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+        let btnDone = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        let btnFlexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil) //atribui um espaço entres os botoes
+        
+        //Adicionando item(botoes)  a toolBar
+        toolBar.items = [btnCancel, btnFlexibleSpace, btnDone]
+        
+        tfCategoria.inputView = pickerView
+        tfCategoria.inputAccessoryView = toolBar
+    }
+    
+    
+    @objc func cancel() {
+        tfCategoria.resignFirstResponder()
+    }
+    
+    @objc func done() {
+        
+        tfCategoria.text = categoriaManager.categoria[pickerView.selectedRow(inComponent: 0)].categoria
+        cancel()
     }
     
     @IBAction func addEdit(_ sender: UIButton) {
@@ -25,6 +66,10 @@ class AddEditViewController: UIViewController {
             treino = Treino(context: context)
         }
         treino.treino = tfTreino.text ?? ""
+        if !tfCategoria.text!.isEmpty {
+            let categoria = categoriaManager.categoria[pickerView.selectedRow(inComponent: 0)]
+            treino.category = categoria
+        }
         
         do {
            try context.save()
@@ -46,4 +91,19 @@ class AddEditViewController: UIViewController {
     }
     */
 
+}
+
+extension AddEditViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return categoriaManager.categoria.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        let categoria = categoriaManager.categoria[row]
+        return categoria.categoria
+    }
 }

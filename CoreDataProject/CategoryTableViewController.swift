@@ -9,37 +9,69 @@ import UIKit
 
 class CategoryTableViewController: UITableViewController {
     
-    
+    var categoriaManager = CategoryManager.shared
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadCategoria()
+    }
+    
+    func loadCategoria() {
+        categoriaManager.loadCategoria(with: context)
+        tableView.reloadData()
     }
     
     @IBAction func add(_ sender: UIBarButtonItem) {
-        
+        showAlert(with: nil)
+    }
+    
+    func showAlert(with categoria: Categoria?) {
+        let title = categoria == nil ? "Adicionar" : "Editar"
+        let alert = UIAlertController(title: title + " Categoria", message: nil, preferredStyle: .alert)
+        alert.addTextField { (textField) in
+            textField.placeholder = "Digite o nome da categoria"
+            if let categoria = categoria?.categoria {
+                textField.text = categoria
+            }
+        }
+        alert.addAction(UIAlertAction(title: title, style: .default, handler: { (action) in
+            let categoria = categoria ?? Categoria(context: self.context)
+            categoria.categoria = alert.textFields?.first?.text ?? ""
+            do {
+                do {
+                    try self.context.save()
+                    self.loadCategoria()
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancelar", style: .cancel, handler: nil))
+        alert.view.tintColor = UIColor(named: "second")
+        present(alert, animated: true, completion: nil)
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
+    //Como teremos apenas um section, podemos comentar esta funcao
+//    override func numberOfSections(in tableView: UITableView) -> Int {
+//        // #warning Incomplete implementation, return the number of sections
+//        return 0
+//    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return categoriaManager.categoria.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        let categorias = categoriaManager.categoria[indexPath.row]
+        cell.textLabel?.text = categorias.categoria
+        
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
