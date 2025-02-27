@@ -11,11 +11,33 @@ class GymViewController: UIViewController {
     
     @IBOutlet weak var lbCategoria: UILabel!
     @IBOutlet weak var lbTreino: UILabel!
+    
+    var treino: Treino!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        lbCategoria.text = treino.category?.categoria
+        lbTreino.text = treino.treino
+        //exemplo de uso de data caso exista uam lbDate
+//        if let releaseDatae = treino.dataLancamento {
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.dateStyle = .long
+//            dateFormatter.locale = Locale(identifier: "pt_BR")
+//            lbData.text = dateFormatter.string(from: releaseDatae)
+//        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        //seta a view de destino para receber os dados
+        let vc = segue.destination as! AddEditViewController
+        
+        //passa o treino dessa view para o treino da view destinada
+        vc.treino = treino
     }
     
 

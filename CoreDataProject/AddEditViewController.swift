@@ -33,23 +33,32 @@ class AddEditViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if treino != nil {
+            title = "Editar treino"
+            btnAddEdit.setTitle("ALTERAR", for: .normal)
+            tfTreino.text = treino.treino
+            if let categoria = treino.category, let index = categoriaManager.categoria.firstIndex(of: categoria) {
+                tfCategoria.text = categoria.categoria
+                pickerView.selectRow(index, inComponent: 0, animated: true)
+            }
+        }
+        prepareConsoletextField()
+    }
+    
+    func prepareConsoletextField() {
         //criando toolbar da pickerView, e adicionar os botoes de cancelar e retornar
         //criando e definindo frame
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 44))
         toolBar.tintColor = UIColor(named: "main")
-        
         //criando botoes
         let btnCancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         let btnDone = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         let btnFlexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil) //atribui um espaço entres os botoes
-        
         //Adicionando item(botoes)  a toolBar
         toolBar.items = [btnCancel, btnFlexibleSpace, btnDone]
-        
         tfCategoria.inputView = pickerView
         tfCategoria.inputAccessoryView = toolBar
     }
-    
     
     @objc func cancel() {
         tfCategoria.resignFirstResponder()

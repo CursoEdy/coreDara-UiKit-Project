@@ -14,6 +14,8 @@ class GymTableViewController: UITableViewController {
     
     // deixar um msg padrao caso a lista de treino esteja vazia
     var label = UILabel()
+    
+    var treino: Treino!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +24,16 @@ class GymTableViewController: UITableViewController {
         label.textAlignment = .center
         
         loadTreino()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier! == "listaSegue" {
+            let vc = segue.destination as! GymViewController
+            
+            if let treinos = fetchedResultsController.fetchedObjects {
+                vc.treino = treinos[tableView.indexPathForSelectedRow!.row]
+            }
+        }
     }
     
     func loadTreino() {
@@ -75,17 +87,22 @@ class GymTableViewController: UITableViewController {
     }
     */
 
-    /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
+            //primeiro recuperamos o treino
+            guard let treino = fetchedResultsController.fetchedObjects?[indexPath.row] else {
+                return
+            }
+            // Apos excluirmos o treino da lista
+            // vamos precisar tbm excluir a linha na tabela
+            // exclusao na tabale efetuada na extension no final do arquivo
+            context.delete(treino)
+        } /* else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
+        */
     }
-    */
 
     /*
     // Override to support rearranging the table view.
@@ -118,6 +135,9 @@ extension GymTableViewController: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any,at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .delete:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
             break
         default:
             tableView.reloadData()

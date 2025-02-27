@@ -18,45 +18,37 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" rowHeight="90" id="oQO-c6-D1g" customClass="GymTableViewCell" customModule="CoreDataProject" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="50" width="393" height="90"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" rowHeight="40" id="oQO-c6-D1g" customClass="GymTableViewCell" customModule="CoreDataProject" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="393" height="40"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oQO-c6-D1g" id="hyP-JD-oii">
-                                    <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="90"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="40"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Categoria" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nFn-V5-jwM">
-                                            <rect key="frame" x="30" y="11" width="314.66666666666669" height="18"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="18" id="aUW-JI-1zv"/>
-                                            </constraints>
+                                            <rect key="frame" x="20" y="15" width="70" height="18"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Treino" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVz-cd-JPA">
-                                            <rect key="frame" x="30" y="44" width="334.66666666666669" height="18"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="18" id="jXo-FN-NCu"/>
-                                            </constraints>
+                                            <rect key="frame" x="292" y="11" width="42.666666666666686" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="JVz-cd-JPA" firstAttribute="leading" secondItem="hyP-JD-oii" secondAttribute="leadingMargin" constant="10" id="2af-ao-uTO"/>
-                                        <constraint firstItem="nFn-V5-jwM" firstAttribute="leading" secondItem="hyP-JD-oii" secondAttribute="leadingMargin" constant="10" id="Cov-dZ-AsY"/>
-                                        <constraint firstItem="JVz-cd-JPA" firstAttribute="trailing" secondItem="hyP-JD-oii" secondAttribute="trailingMargin" constant="10" id="ds5-vJ-ylA"/>
-                                        <constraint firstItem="JVz-cd-JPA" firstAttribute="top" secondItem="nFn-V5-jwM" secondAttribute="bottom" constant="15" id="sML-O6-4s5"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="nFn-V5-jwM" secondAttribute="trailing" constant="10" id="uni-9S-Ane"/>
-                                        <constraint firstItem="nFn-V5-jwM" firstAttribute="top" secondItem="hyP-JD-oii" secondAttribute="topMargin" id="vOm-5b-7qy"/>
+                                        <constraint firstItem="nFn-V5-jwM" firstAttribute="top" secondItem="hyP-JD-oii" secondAttribute="topMargin" constant="4" id="84B-vp-zbc"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="JVz-cd-JPA" secondAttribute="trailing" constant="20" id="9AT-Ob-Mrd"/>
+                                        <constraint firstItem="nFn-V5-jwM" firstAttribute="leading" secondItem="hyP-JD-oii" secondAttribute="leadingMargin" id="MB5-cf-t90"/>
+                                        <constraint firstItem="JVz-cd-JPA" firstAttribute="top" secondItem="hyP-JD-oii" secondAttribute="topMargin" id="Q3Y-u8-bTi"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="lbCategoria" destination="nFn-V5-jwM" id="deN-1R-ehI"/>
                                     <outlet property="lbTreino" destination="JVz-cd-JPA" id="0MX-BP-2yb"/>
-                                    <segue destination="VZB-mL-g4A" kind="show" id="1kO-KP-0xG"/>
+                                    <segue destination="VZB-mL-g4A" kind="show" identifier="listaSegue" id="1kO-KP-0xG"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -68,7 +60,7 @@
                     <navigationItem key="navigationItem" title="Lista de Treino" id="MUe-VX-M45">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="pd9-4q-g70">
                             <connections>
-                                <segue destination="jIh-5s-9dE" kind="show" id="bsx-UT-JkT"/>
+                                <segue destination="jIh-5s-9dE" kind="show" identifier="newGymSegue" id="bsx-UT-JkT"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
