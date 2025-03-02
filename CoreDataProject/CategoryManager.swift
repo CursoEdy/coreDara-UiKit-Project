@@ -10,7 +10,7 @@ import CoreData
 class CategoryManager {
     
     static let shared = CategoryManager()
-    var categoria: [Categoria]
+    var categoria: [Categoria] = []
     
     func loadCategoria(with context: NSManagedObjectContext) {
         let fetchRequest: NSFetchRequest<Categoria> = Categoria.fetchRequest()
@@ -25,17 +25,16 @@ class CategoryManager {
     }
     
     func deleteCategoria(at index: Int, with context: NSManagedObjectContext) {
-        guard index >= 0 && index < categoria.count else { return }
         let categoriaParaDeletar = categoria[index]
         context.delete(categoriaParaDeletar)
         do {
             try context.save()
+//            categoria.remove(at: index)
         } catch {
             print("Erro ao deletar categoria: \(error.localizedDescription)")
         }
     }
     
     private init() {
-        self.categoria = []
     }
 }

@@ -14,6 +14,7 @@ class GymTableViewController: UITableViewController {
     
     // deixar um msg padrao caso a lista de treino esteja vazia
     var label = UILabel()
+    let searchController = UISearchController(searchResultsController: nil)
     
     var treino: Treino!
 
@@ -22,6 +23,17 @@ class GymTableViewController: UITableViewController {
         
         label.text = "Vc nao possui nenhum treino no momento."
         label.textAlignment = .center
+        
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.tintColor = .systemBlue
+        searchController.searchBar.barTintColor = .systemBlue
+        navigationItem.searchController = searchController
+        searchController.searchBar.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         loadTreino()
     }
@@ -36,10 +48,15 @@ class GymTableViewController: UITableViewController {
         }
     }
     
-    func loadTreino() {
+    func loadTreino(filter: String = "") {
         let fetchRequest: NSFetchRequest<Treino> = Treino.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "treino", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        if !filter.isEmpty {
+            let predicado = NSPredicate(format: "treino contains [cd] %@", filter)
+            fetchRequest.predicate = predicado
+        }
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
@@ -79,14 +96,6 @@ class GymTableViewController: UITableViewController {
         return cell
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -98,36 +107,8 @@ class GymTableViewController: UITableViewController {
             // vamos precisar tbm excluir a linha na tabela
             // exclusao na tabale efetuada na extension no final do arquivo
             context.delete(treino)
-        } /* else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }
-        */
+        } 
     }
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
@@ -142,5 +123,20 @@ extension GymTableViewController: NSFetchedResultsControllerDelegate {
         default:
             tableView.reloadData()
         }
+    }
+}
+
+extension GymTableViewController: UISearchResultsUpdating, UISearchBarDelegate {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        loadTreino()
+        tableView.reloadData()
+    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        loadTreino(filter: searchBar.text!)
+        tableView.reloadData()
     }
 }

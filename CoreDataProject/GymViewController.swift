@@ -26,7 +26,7 @@ class GymViewController: UIViewController {
 //        if let releaseDatae = treino.dataLancamento {
 //            let dateFormatter = DateFormatter()
 //            dateFormatter.dateStyle = .long
-//            dateFormatter.locale = Locale(identifier: "pt_BR")
+//            dateFormatter.locale = Locale(identifier: "pt-BR")
 //            lbData.text = dateFormatter.string(from: releaseDatae)
 //        }
     }
